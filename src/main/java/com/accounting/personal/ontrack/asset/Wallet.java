@@ -10,11 +10,6 @@ public class Wallet {
     private final String owner;
     private final double money;
 
-    public Wallet() {
-        this.owner = null;
-        this.money = 0.0;
-    }
-
     public Wallet(final String owner, final double money) {
         validateOwnerName(owner);
         this.owner = owner;

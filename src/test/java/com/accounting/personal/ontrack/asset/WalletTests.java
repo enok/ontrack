@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.hamcrest.core.IsSame.sameInstance;
 import static org.junit.Assert.assertThat;
 
@@ -31,23 +30,9 @@ public class WalletTests {
     }
 
     @Test(expected = EmptyWalletException.class)
-    public void errorWhenWithdrawFromAnEmptyWalletAndNoOwner() {
-        Wallet wallet = new Wallet();
-        wallet.withdraw(10.0);
-    }
-
-    @Test(expected = EmptyWalletException.class)
     public void errorWhenWithdrawFromAnEmptyWallet() {
         Wallet wallet = new Wallet("Bill", 0.0);
         wallet.withdraw(10.0);
-    }
-
-    @Test
-    public void aNewDefaultWalletHasZeroBalanceAndNoOwner() {
-        Wallet wallet = new Wallet();
-
-        assertThat(0.0, is(wallet.balance()));
-        assertThat(wallet.owner(), nullValue());
     }
 
     @Test
@@ -94,12 +79,6 @@ public class WalletTests {
     public void errorWhenDepositingNegativeAmountIntoAWallet() {
         Wallet wallet = new Wallet("Bill", 0.0);
         wallet.deposit(-1.0);
-    }
-
-    @Test(expected = NameMustNotBeEmpty.class)
-    public void errorWhenDepositingIntoAWalletWithoutOwner() {
-        Wallet wallet = new Wallet();
-        wallet.deposit(10.0);
     }
 
     @Test
