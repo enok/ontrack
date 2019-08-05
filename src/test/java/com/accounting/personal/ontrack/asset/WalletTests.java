@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 public class WalletTests {
 
     @Test(expected = NameMustNotBeEmpty.class)
-    public void aWalletMustNotHaveAnEmptyName() {
+    public void aWalletMustNotHaveAnEmptyOwnerName() {
         new Wallet(null, 0.0);
     }
 
@@ -51,7 +51,7 @@ public class WalletTests {
     }
 
     @Test
-    public void aWalletMustHaveAName() {
+    public void aWalletMustHaveAnOwnerName() {
         Wallet wallet = new Wallet("Bill", 10.0);
 
         assertThat(wallet.owner(), is("Bill"));
