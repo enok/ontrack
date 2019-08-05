@@ -4,10 +4,8 @@ import com.accounting.personal.ontrack.asset.exception.EmptyWalletException;
 import com.accounting.personal.ontrack.asset.exception.NameMustNotBeEmpty;
 import com.accounting.personal.ontrack.asset.exception.NegativeValueDepositedException;
 import com.accounting.personal.ontrack.asset.exception.NegativeValueWithdrawnException;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-@Component
 public class Wallet {
     private final String owner;
     private final double money;
