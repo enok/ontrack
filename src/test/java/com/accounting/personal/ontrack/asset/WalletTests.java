@@ -1,7 +1,7 @@
 package com.accounting.personal.ontrack.asset;
 
 import com.accounting.personal.ontrack.asset.exception.EmptyWalletException;
-import com.accounting.personal.ontrack.asset.exception.NameMustNotBeEmpty;
+import com.accounting.personal.ontrack.asset.exception.MissingOwnerException;
 import com.accounting.personal.ontrack.asset.exception.NegativeValueDepositedException;
 import com.accounting.personal.ontrack.asset.exception.NegativeValueWithdrawnException;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertThat;
 @SpringBootTest
 public class WalletTests {
 
-    @Test(expected = NameMustNotBeEmpty.class)
+    @Test(expected = MissingOwnerException.class)
     public void aWalletMustNotHaveAnEmptyOwnerName() {
         new Wallet(null, 0.0);
     }

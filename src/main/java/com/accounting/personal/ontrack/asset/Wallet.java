@@ -1,7 +1,7 @@
 package com.accounting.personal.ontrack.asset;
 
 import com.accounting.personal.ontrack.asset.exception.EmptyWalletException;
-import com.accounting.personal.ontrack.asset.exception.NameMustNotBeEmpty;
+import com.accounting.personal.ontrack.asset.exception.MissingOwnerException;
 import com.accounting.personal.ontrack.asset.exception.NegativeValueDepositedException;
 import com.accounting.personal.ontrack.asset.exception.NegativeValueWithdrawnException;
 import org.springframework.util.StringUtils;
@@ -16,7 +16,7 @@ public class Wallet {
         this.money = money;
     }
 
-    public final Wallet withdraw(final double money) {
+    public Wallet withdraw(final double money) {
         if (money < 0) {
             throw new NegativeValueWithdrawnException("Cannot withdraw a negative amount of money.");
         }
@@ -45,7 +45,7 @@ public class Wallet {
 
     private void validateOwnerName(String owner) {
         if (StringUtils.isEmpty(owner)) {
-            throw new NameMustNotBeEmpty("A wallet must have an owner name.");
+            throw new MissingOwnerException("A wallet must have an owner name.");
         }
     }
 }
