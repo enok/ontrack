@@ -3,29 +3,26 @@ package com.accounting.personal.ontrack.asset;
 import com.accounting.personal.ontrack.asset.exception.*;
 
 public class BankAccount extends Wallet {
-    private final Bank bank;
     private final BankAgency bankAgency;
     private final Integer code;
     private final Integer codeDigit;
     private Double limit;
 
-    public BankAccount(final String owner, final double balance, final Bank bank, final BankAgency bankAgency,
+    public BankAccount(final String owner, final double balance, final BankAgency bankAgency,
                        final Integer code, final Integer codeDigit, Double limit) {
         super(owner, balance);
-        validateBank(bank);
         validateBankAgency(bankAgency);
         validateCode(code);
         validateLimit(limit);
-        this.bank = bank;
         this.bankAgency = bankAgency;
         this.code = code;
         this.codeDigit = codeDigit;
         this.limit = limit;
     }
 
-    public BankAccount(final String owner, final Bank bank, final BankAgency bankAgency, final Integer code,
+    public BankAccount(final String owner, final BankAgency bankAgency, final Integer code,
                        final Integer codeDigit, final Double limit) {
-        this(owner, 0.0, bank, bankAgency, code, codeDigit, limit);
+        this(owner, 0.0, bankAgency, code, codeDigit, limit);
     }
 
     @Override
@@ -34,15 +31,7 @@ public class BankAccount extends Wallet {
         if (money > totalBalance()) {
             throw new WithdrawBiggerThanTotalLimitException("Cannot withdraw a value bigger than balance + limit.");
         }
-        return new BankAccount(wallet.owner(), wallet.balance(), bank, bankAgency, code, codeDigit, limit);
-    }
-
-    public String bankName() {
-        return bank.getName();
-    }
-
-    public int bankCode() {
-        return bank.getCode();
+        return new BankAccount(wallet.owner(), wallet.balance(), bankAgency, code, codeDigit, limit);
     }
 
     public int agencyCode() {
@@ -71,12 +60,6 @@ public class BankAccount extends Wallet {
 
     public static BackAccountBuilder createObject() {
         return new BackAccountBuilder();
-    }
-
-    private void validateBank(Bank bank) {
-        if (bank == null) {
-            throw new MissingBankException("A bank account must have a bank associated with it.");
-        }
     }
 
     private void validateBankAgency(BankAgency bankAgency) {

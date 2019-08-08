@@ -3,7 +3,6 @@ package com.accounting.personal.ontrack.asset;
 public class BackAccountBuilder {
     private String owner;
     private Double balance;
-    private Bank bank;
     private BankAgency bankAgency;
     private Integer code;
     private Integer codeDigit;
@@ -16,11 +15,6 @@ public class BackAccountBuilder {
 
     public BackAccountBuilder withBalance(final double balance) {
         this.balance = balance;
-        return this;
-    }
-
-    public BackAccountBuilder withBank(final Bank bank) {
-        this.bank = bank;
         return this;
     }
 
@@ -46,8 +40,8 @@ public class BackAccountBuilder {
 
     public BankAccount build() {
         if (balance != null) {
-            return new BankAccount(owner, balance, bank, bankAgency, code, codeDigit, limit);
+            return new BankAccount(owner, balance, bankAgency, code, codeDigit, limit);
         }
-        return new BankAccount(owner, bank, bankAgency, code, codeDigit, limit);
+        return new BankAccount(owner, bankAgency, code, codeDigit, limit);
     }
 }
