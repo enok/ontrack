@@ -16,7 +16,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WalletTests {
+public class WalletTest {
 
     @Test(expected = MissingNameException.class)
     public void errorWhenAWalletDoesNotHaveAnOwnerName() {
