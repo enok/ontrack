@@ -1,6 +1,6 @@
 package com.accounting.personal.ontrack.asset;
 
-public class BackAccountBuilder {
+class BackAccountBuilder {
     private String owner;
     private Double balance;
     private BankAgency bankAgency;

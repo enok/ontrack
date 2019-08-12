@@ -1,6 +1,8 @@
 package com.accounting.personal.ontrack.asset;
 
 import com.accounting.personal.ontrack.asset.exception.MissingNameException;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.util.StringUtils;
 
 public class Bank {
@@ -25,5 +27,19 @@ public class Bank {
 
     public int getCode() {
         return code;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Bank bank = (Bank) o;
+
+        return new EqualsBuilder()
+                .append(code, bank.code)
+                .append(name, bank.name)
+                .isEquals();
     }
 }
