@@ -4,6 +4,7 @@ import com.accounting.personal.ontrack.asset.Bank;
 import com.accounting.personal.ontrack.payment.exception.InvalidCvvValue;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class CreditCard {
     private final CreditCardClass creditCardClass;
@@ -16,11 +17,12 @@ public class CreditCard {
     private final LocalDate memberSince;
     private final LocalDate validThru;
     private final int cvv;
+    private final List<CreditCardFunction> creditCardFunctions;
 
-    public CreditCard(final CreditCardClass creditCardClass, final CreditCardSubClass creditCardSubClass,
+    CreditCard(final CreditCardClass creditCardClass, final CreditCardSubClass creditCardSubClass,
                       final CreditCardFlag creditCardFlag, final CreditCardType creditCardType, final Bank bank,
                       final long creditCardNumber, final String customerName, final LocalDate memberSince,
-                      final LocalDate validThru, final int cvv) {
+                      final LocalDate validThru, final int cvv, final List<CreditCardFunction> creditCardFunctions) {
         this.creditCardClass = creditCardClass;
         this.creditCardSubClass = creditCardSubClass;
         this.creditCardFlag = creditCardFlag;
@@ -32,6 +34,7 @@ public class CreditCard {
         this.validThru = validThru;
         validateCvv(cvv);
         this.cvv = cvv;
+        this.creditCardFunctions = creditCardFunctions;
     }
 
     private void validateCvv(int cvv) {
@@ -83,5 +86,9 @@ public class CreditCard {
 
     public static CreditCardBuilder createObject() {
         return new CreditCardBuilder();
+    }
+
+    public List<CreditCardFunction> getFunctions() {
+        return creditCardFunctions;
     }
 }

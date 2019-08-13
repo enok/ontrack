@@ -1,8 +1,11 @@
 package com.accounting.personal.ontrack.payment;
 
 import com.accounting.personal.ontrack.asset.Bank;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 class CreditCardBuilder {
 
@@ -16,6 +19,7 @@ class CreditCardBuilder {
     private LocalDate memberSinceDate;
     private LocalDate validThruDate;
     private int cvv;
+    private List<CreditCardFunction> creditCardFunctions;
 
     public CreditCardBuilder withCreditCardClass(final CreditCardClass creditCardClass) {
         this.creditCardClass = creditCardClass;
@@ -67,8 +71,16 @@ class CreditCardBuilder {
         return this;
     }
 
+    public CreditCardBuilder withFunction(final CreditCardFunction creditCardFunction) {
+        if (CollectionUtils.isEmpty(creditCardFunctions)) {
+            creditCardFunctions = new ArrayList<>();
+        }
+        creditCardFunctions.add(creditCardFunction);
+        return this;
+    }
+
     public CreditCard build() {
         return new CreditCard(creditCardClass, creditCardSubClass, creditCardFlag, creditCardType, bank,
-                creditCardNumber, customerName, memberSinceDate, validThruDate, cvv);
+                creditCardNumber, customerName, memberSinceDate, validThruDate, cvv, creditCardFunctions);
     }
 }

@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import static com.accounting.personal.ontrack.payment.CreditCardClass.*;
 import static com.accounting.personal.ontrack.payment.CreditCardFlag.MASTERCARD;
 import static com.accounting.personal.ontrack.payment.CreditCardFlag.VISA;
+import static com.accounting.personal.ontrack.payment.CreditCardFunction.CREDIT;
+import static com.accounting.personal.ontrack.payment.CreditCardFunction.DEBIT;
 import static com.accounting.personal.ontrack.payment.CreditCardSubClass.*;
 import static com.accounting.personal.ontrack.payment.CreditCardType.*;
 import static org.hamcrest.core.Is.is;
@@ -399,5 +401,67 @@ public class CreditCardTest {
                 .build();
 
         assertThat(getCVV(), is(creditCard.getCVV()));
+    }
+
+    @Test
+    public void aCreditCardMustHaveAFunction_Credit() {
+        CreditCard creditCard = CreditCard
+                .createObject()
+                .withCreditCardClass(GOLD)
+                .withCreditCardSubClass(STANDARD)
+                .withCreditCardFlag(VISA)
+                .withCreditCardType(PHYSICAL)
+                .withBank(getBank())
+                .withCreditCardNumber(getCreditCardNumber())
+                .withCustomerName(getCustomerName())
+                .withMemberSinceDate(getMemberSinceDate())
+                .withValidThruDate(getValidThruDate())
+                .withCVV(getCVV())
+                .withFunction(CREDIT)
+                .build();
+
+        assertThat(CREDIT, is(creditCard.getFunctions().get(0)));
+    }
+
+    @Test
+    public void aCreditCardMustHaveAFunction_Debit() {
+        CreditCard creditCard = CreditCard
+                .createObject()
+                .withCreditCardClass(GOLD)
+                .withCreditCardSubClass(STANDARD)
+                .withCreditCardFlag(VISA)
+                .withCreditCardType(PHYSICAL)
+                .withBank(getBank())
+                .withCreditCardNumber(getCreditCardNumber())
+                .withCustomerName(getCustomerName())
+                .withMemberSinceDate(getMemberSinceDate())
+                .withValidThruDate(getValidThruDate())
+                .withCVV(getCVV())
+                .withFunction(DEBIT)
+                .build();
+
+        assertThat(DEBIT, is(creditCard.getFunctions().get(0)));
+    }
+
+    @Test
+    public void aCreditCardMustHaveAFunction_Credit_Debit() {
+        CreditCard creditCard = CreditCard
+                .createObject()
+                .withCreditCardClass(GOLD)
+                .withCreditCardSubClass(STANDARD)
+                .withCreditCardFlag(VISA)
+                .withCreditCardType(PHYSICAL)
+                .withBank(getBank())
+                .withCreditCardNumber(getCreditCardNumber())
+                .withCustomerName(getCustomerName())
+                .withMemberSinceDate(getMemberSinceDate())
+                .withValidThruDate(getValidThruDate())
+                .withCVV(getCVV())
+                .withFunction(CREDIT)
+                .withFunction(DEBIT)
+                .build();
+
+        assertThat(CREDIT, is(creditCard.getFunctions().get(0)));
+        assertThat(DEBIT, is(creditCard.getFunctions().get(1)));
     }
 }
