@@ -14,8 +14,31 @@ public class TransactionTest {
 
     @Test
     public void aTransactionMustHaveAType_Money() {
-        Transaction transaction = new Transaction(TransactionType.MONEY);
+        Transaction transaction = new Transaction(TransactionType.MONEY, getExpenseGroup());
 
         assertThat(TransactionType.MONEY, is(transaction.getType()));
     }
+
+    @Test
+    public void aTransactionMustHaveAType_Card() {
+        Transaction transaction = new Transaction(TransactionType.CARD, getExpenseGroup());
+
+        assertThat(TransactionType.CARD, is(transaction.getType()));
+    }
+
+    private String getExpenseGroupName() {
+        return "HOUSE";
+    }
+
+    private ExpenseGroup getExpenseGroup() {
+        return new ExpenseGroup(getExpenseGroupName());
+    }
+
+    @Test
+    public void aTransactionMustHaveAExpenseGroup() {
+        Transaction transaction = new Transaction(TransactionType.MONEY, getExpenseGroup());
+
+        assertThat(getExpenseGroupName(), is(transaction.getExpenseGroupName()));
+    }
+
 }
