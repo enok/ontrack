@@ -3,30 +3,30 @@ package com.accounting.personal.ontrack.bill;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.accounting.personal.ontrack.bill.TransactionType.*;
+import static com.accounting.personal.ontrack.bill.TransactionMechanism.*;
 
 public class Transaction {
     private final LocalDate date;
     private final ExpenseGroup expenseGroup;
     private final String description;
     private final Double value;
-    private final TransactionType type;
+    private final TransactionMechanism mechanism;
     private final Integer currentInstallment;
     private final Integer totalInstallments;
 
     public Transaction(final LocalDate date, final ExpenseGroup expenseGroup, final String description,
-                       final Double value, final TransactionType type) {
-        this(date, expenseGroup, description, value, type, null, null);
+                       final Double value, final TransactionMechanism mechanism) {
+        this(date, expenseGroup, description, value, mechanism, null, null);
     }
 
     public Transaction(final LocalDate date, final ExpenseGroup expenseGroup, final String description,
-                       final Double value, final TransactionType type, final Integer currentInstallment,
+                       final Double value, final TransactionMechanism mechanism, final Integer currentInstallment,
                        final Integer totalInstallments) {
         this.date = date;
         this.expenseGroup = expenseGroup;
         this.description = description;
         this.value = value;
-        this.type = type;
+        this.mechanism = mechanism;
         this.currentInstallment = currentInstallment;
         this.totalInstallments = totalInstallments;
         validateInstallment();
@@ -56,8 +56,8 @@ public class Transaction {
         return value;
     }
 
-    public TransactionType getType() {
-        return type;
+    public TransactionMechanism getMechanism() {
+        return mechanism;
     }
 
     public Integer getCurrentInstallment() {
@@ -75,7 +75,7 @@ public class Transaction {
     }
 
     private boolean typeMoneyWithInstallment() {
-        return MONEY.equals(type) &&
+        return MONEY.equals(mechanism) &&
                 ((currentInstallment != null) || (totalInstallments != null));
     }
 }

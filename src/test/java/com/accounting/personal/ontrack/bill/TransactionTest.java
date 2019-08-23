@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.accounting.personal.ontrack.bill.TransactionType.*;
+import static com.accounting.personal.ontrack.bill.TransactionMechanism.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -81,19 +81,18 @@ public class TransactionTest {
         assertThat(getValue(), is(transaction.getValue()));
     }
 
-
     @Test
-    public void aTransactionMustHaveAType_Money() {
+    public void aTransactionMustHaveAMechanismOfPaymentUsingMoney() {
         Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
 
-        assertThat(MONEY, is(transaction.getType()));
+        assertThat(MONEY, is(transaction.getMechanism()));
     }
 
     @Test
-    public void aTransactionMustHaveAType_Card() {
+    public void aTransactionMustHaveAMechanismOfPaymentUsingCard() {
         Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), CARD);
 
-        assertThat(CARD, is(transaction.getType()));
+        assertThat(CARD, is(transaction.getMechanism()));
     }
 
     private Integer getCurrentInstallment() {

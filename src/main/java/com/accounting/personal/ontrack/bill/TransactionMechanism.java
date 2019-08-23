@@ -1,6 +1,6 @@
 package com.accounting.personal.ontrack.bill;
 
-public enum TransactionType {
+public enum TransactionMechanism {
     MONEY,
     CARD
 }
