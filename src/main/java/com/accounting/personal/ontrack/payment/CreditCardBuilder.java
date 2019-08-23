@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 class CreditCardBuilder {
-
     private CreditCardClass creditCardClass;
     private CreditCardSubClass creditCardSubClass;
     private CreditCardFlag creditCardFlag;

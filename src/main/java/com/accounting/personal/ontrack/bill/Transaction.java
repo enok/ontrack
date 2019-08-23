@@ -3,7 +3,7 @@ package com.accounting.personal.ontrack.bill;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.accounting.personal.ontrack.bill.TransactionMechanism.*;
+import static com.accounting.personal.ontrack.bill.TransactionMechanism.MONEY;
 
 public class Transaction {
     private final LocalDate date;
@@ -14,14 +14,14 @@ public class Transaction {
     private final Integer currentInstallment;
     private final Integer totalInstallments;
 
-    public Transaction(final LocalDate date, final ExpenseGroup expenseGroup, final String description,
-                       final Double value, final TransactionMechanism mechanism) {
+    Transaction(final LocalDate date, final ExpenseGroup expenseGroup, final String description,
+                final Double value, final TransactionMechanism mechanism) {
         this(date, expenseGroup, description, value, mechanism, null, null);
     }
 
-    public Transaction(final LocalDate date, final ExpenseGroup expenseGroup, final String description,
-                       final Double value, final TransactionMechanism mechanism, final Integer currentInstallment,
-                       final Integer totalInstallments) {
+    Transaction(final LocalDate date, final ExpenseGroup expenseGroup, final String description,
+                final Double value, final TransactionMechanism mechanism, final Integer currentInstallment,
+                final Integer totalInstallments) {
         this.date = date;
         this.expenseGroup = expenseGroup;
         this.description = description;
@@ -66,6 +66,10 @@ public class Transaction {
 
     public Integer getTotalInstallments() {
         return totalInstallments;
+    }
+
+    public static TransactionBuilder createObject() {
+        return new TransactionBuilder();
     }
 
     private void validateInstallment() {

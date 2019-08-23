@@ -8,7 +8,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.accounting.personal.ontrack.bill.TransactionMechanism.*;
+import static com.accounting.personal.ontrack.bill.TransactionMechanism.CARD;
+import static com.accounting.personal.ontrack.bill.TransactionMechanism.MONEY;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -24,7 +25,14 @@ public class TransactionTest {
 
     @Test
     public void aTransactionMustHaveADate() {
-        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .build();
 
         assertThat(getTransactionDate(), is(transaction.getDate()));
     }
@@ -47,14 +55,28 @@ public class TransactionTest {
 
     @Test
     public void aTransactionMustHaveAExpenseGroup() {
-        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .build();
 
         assertThat(getExpenseGroupName(), is(transaction.getExpenseGroupName()));
     }
 
     @Test
     public void aTransactionMustHaveAExpenseSubGroup() {
-        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .build();
 
         assertThat(getExpenseSubGroupName(), is(transaction.getFirstExpenseSubGroupName()));
     }
@@ -65,7 +87,14 @@ public class TransactionTest {
 
     @Test
     public void aTransactionMustHaveADescription() {
-        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .build();
 
         assertThat(getDescription(), is(transaction.getDescription()));
     }
@@ -76,21 +105,42 @@ public class TransactionTest {
 
     @Test
     public void aTransactionMustHaveAValue() {
-        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .build();
 
         assertThat(getValue(), is(transaction.getValue()));
     }
 
     @Test
     public void aTransactionMustHaveAMechanismOfPaymentUsingMoney() {
-        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .build();
 
         assertThat(MONEY, is(transaction.getMechanism()));
     }
 
     @Test
     public void aTransactionMustHaveAMechanismOfPaymentUsingCard() {
-        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), CARD);
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(CARD)
+                .build();
 
         assertThat(CARD, is(transaction.getMechanism()));
     }
@@ -101,7 +151,16 @@ public class TransactionTest {
 
     @Test
     public void aTransactionCanBeSplittedWithCurrentInstallment() {
-        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), CARD, getCurrentInstallment(), getTotalInstallments());
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(CARD)
+                .withCurrentInstallment(getCurrentInstallment())
+                .withTotalInstallments(getTotalInstallments())
+                .build();
 
         assertThat(getCurrentInstallment(), is(transaction.getCurrentInstallment()));
     }
@@ -112,23 +171,59 @@ public class TransactionTest {
 
     @Test
     public void aTransactionCanBeSplittedWithTotalInstallments() {
-        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), CARD, getCurrentInstallment(), getTotalInstallments());
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(CARD)
+                .withCurrentInstallment(getCurrentInstallment())
+                .withTotalInstallments(getTotalInstallments())
+                .build();
 
         assertThat(getTotalInstallments(), is(transaction.getTotalInstallments()));
     }
 
     @Test(expected = InvalidInstallmentException.class)
-    public void aTransactionOfTypeMoneyCanBeSplitted_current_total() {
-        new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY, getCurrentInstallment(), getTotalInstallments());
+    public void aTransactionOfTypeMoneyCannotBeSplitted_current_total() {
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .withCurrentInstallment(getCurrentInstallment())
+                .withTotalInstallments(getTotalInstallments())
+                .build();
     }
 
     @Test(expected = InvalidInstallmentException.class)
-    public void aTransactionOfTypeMoneyCanBeSplitted_current() {
-        new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY, getCurrentInstallment(), null);
+    public void aTransactionOfTypeMoneyCannotBeSplitted_current() {
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .withCurrentInstallment(getCurrentInstallment())
+                .withTotalInstallments(null)
+                .build();
     }
 
     @Test(expected = InvalidInstallmentException.class)
-    public void aTransactionOfTypeMoneyCanBeSplitted_total() {
-        new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY, null, getTotalInstallments());
+    public void aTransactionOfTypeMoneyCannotBeSplitted_total() {
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .withCurrentInstallment(null)
+                .withTotalInstallments(getTotalInstallments())
+                .build();
     }
 }

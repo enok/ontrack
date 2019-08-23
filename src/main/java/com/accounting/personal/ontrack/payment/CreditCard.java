@@ -84,11 +84,11 @@ public class CreditCard {
         return cvv;
     }
 
-    public static CreditCardBuilder createObject() {
-        return new CreditCardBuilder();
-    }
-
     public List<CreditCardFunction> getFunctions() {
         return creditCardFunctions;
+    }
+
+    public static CreditCardBuilder createObject() {
+        return new CreditCardBuilder();
     }
 }
