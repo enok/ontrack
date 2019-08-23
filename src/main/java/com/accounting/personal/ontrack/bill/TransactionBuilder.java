@@ -1,11 +1,16 @@
 package com.accounting.personal.ontrack.bill;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.LocalDate;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 public class TransactionBuilder {
     private LocalDate date;
     private ExpenseGroup expenseGroup;
     private String description;
+    private TransactionType type;
     private Double value;
     private TransactionMechanism mechanism;
     private Integer currentInstallment;
@@ -23,6 +28,11 @@ public class TransactionBuilder {
 
     public TransactionBuilder withDescription(final String description) {
         this.description = description;
+        return this;
+    }
+
+    public TransactionBuilder withType(final TransactionType type) {
+        this.type = type;
         return this;
     }
 
@@ -47,9 +57,13 @@ public class TransactionBuilder {
     }
 
     public Transaction build() {
-        if ((currentInstallment == null) && (totalInstallments == null)) {
-            return new Transaction(date, expenseGroup, description, value, mechanism);
+        if ((date == null) || (expenseGroup == null) || isBlank(description) || (type == null) || (value == null) ||
+                (mechanism == null)) {
+            throw new MissingMandatoryFieldsException("Missing mandatory field(s).");
         }
-        return new Transaction(date, expenseGroup, description, value, mechanism, currentInstallment, totalInstallments);
+        if ((currentInstallment == null) && (totalInstallments == null)) {
+            return new Transaction(date, expenseGroup, description, type, value, mechanism);
+        }
+        return new Transaction(date, expenseGroup, description, type, value, mechanism, currentInstallment, totalInstallments);
     }
 }

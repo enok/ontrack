@@ -10,6 +10,8 @@ import java.time.format.DateTimeFormatter;
 
 import static com.accounting.personal.ontrack.bill.TransactionMechanism.CARD;
 import static com.accounting.personal.ontrack.bill.TransactionMechanism.MONEY;
+import static com.accounting.personal.ontrack.bill.TransactionType.CREDIT;
+import static com.accounting.personal.ontrack.bill.TransactionType.DEBIT;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -23,6 +25,13 @@ public class TransactionTest {
         return LocalDate.parse(dateInString, formatter);
     }
 
+    @Test(expected = MissingMandatoryFieldsException.class)
+    public void errorWhenMissingMandatoryFields() {
+        Transaction
+                .createObject()
+                .build();
+    }
+
     @Test
     public void aTransactionMustHaveADate() {
         Transaction transaction = Transaction
@@ -30,6 +39,7 @@ public class TransactionTest {
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .build();
@@ -60,6 +70,7 @@ public class TransactionTest {
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .build();
@@ -74,6 +85,7 @@ public class TransactionTest {
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .build();
@@ -92,11 +104,46 @@ public class TransactionTest {
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .build();
 
         assertThat(getDescription(), is(transaction.getDescription()));
+    }
+
+    private TransactionType getType() {
+        return DEBIT;
+    }
+
+    @Test
+    public void aTransactionMustHaveAType_Debit() {
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withType(getType())
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .build();
+
+        assertThat(getType(), is(transaction.getType()));
+    }
+
+    @Test
+    public void aTransactionMustHaveAType_Credit() {
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseGroup(getExpenseGroup())
+                .withDescription(getDescription())
+                .withType(CREDIT)
+                .withValue(getValue())
+                .withMechanism(MONEY)
+                .build();
+
+        assertThat(CREDIT, is(transaction.getType()));
     }
 
     private Double getValue() {
@@ -110,6 +157,7 @@ public class TransactionTest {
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .build();
@@ -124,6 +172,7 @@ public class TransactionTest {
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .build();
@@ -138,6 +187,7 @@ public class TransactionTest {
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(CARD)
                 .build();
@@ -156,6 +206,7 @@ public class TransactionTest {
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(CARD)
                 .withCurrentInstallment(getCurrentInstallment())
@@ -176,6 +227,7 @@ public class TransactionTest {
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(CARD)
                 .withCurrentInstallment(getCurrentInstallment())
@@ -187,11 +239,12 @@ public class TransactionTest {
 
     @Test(expected = InvalidInstallmentException.class)
     public void aTransactionOfTypeMoneyCannotBeSplitted_current_total() {
-        Transaction transaction = Transaction
+        Transaction
                 .createObject()
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .withCurrentInstallment(getCurrentInstallment())
@@ -201,11 +254,12 @@ public class TransactionTest {
 
     @Test(expected = InvalidInstallmentException.class)
     public void aTransactionOfTypeMoneyCannotBeSplitted_current() {
-        Transaction transaction = Transaction
+        Transaction
                 .createObject()
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .withCurrentInstallment(getCurrentInstallment())
@@ -215,11 +269,12 @@ public class TransactionTest {
 
     @Test(expected = InvalidInstallmentException.class)
     public void aTransactionOfTypeMoneyCannotBeSplitted_total() {
-        Transaction transaction = Transaction
+        Transaction
                 .createObject()
                 .withDate(getTransactionDate())
                 .withExpenseGroup(getExpenseGroup())
                 .withDescription(getDescription())
+                .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .withCurrentInstallment(null)
