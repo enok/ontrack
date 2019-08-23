@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static com.accounting.personal.ontrack.bill.TransactionType.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -23,23 +24,9 @@ public class TransactionTest {
 
     @Test
     public void aTransactionMustHaveADate() {
-        Transaction transaction = new Transaction(getTransactionDate(), TransactionType.MONEY, getExpenseGroup(), getDescription());
+        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
 
         assertThat(getTransactionDate(), is(transaction.getDate()));
-    }
-
-    @Test
-    public void aTransactionMustHaveAType_Money() {
-        Transaction transaction = new Transaction(getTransactionDate(), TransactionType.MONEY, getExpenseGroup(), getDescription());
-
-        assertThat(TransactionType.MONEY, is(transaction.getType()));
-    }
-
-    @Test
-    public void aTransactionMustHaveAType_Card() {
-        Transaction transaction = new Transaction(getTransactionDate(), TransactionType.CARD, getExpenseGroup(), getDescription());
-
-        assertThat(TransactionType.CARD, is(transaction.getType()));
     }
 
     private String getExpenseSubGroupName() {
@@ -60,14 +47,14 @@ public class TransactionTest {
 
     @Test
     public void aTransactionMustHaveAExpenseGroup() {
-        Transaction transaction = new Transaction(getTransactionDate(), TransactionType.MONEY, getExpenseGroup(), getDescription());
+        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
 
         assertThat(getExpenseGroupName(), is(transaction.getExpenseGroupName()));
     }
 
     @Test
     public void aTransactionMustHaveAExpenseSubGroup() {
-        Transaction transaction = new Transaction(getTransactionDate(), TransactionType.MONEY, getExpenseGroup(), getDescription());
+        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
 
         assertThat(getExpenseSubGroupName(), is(transaction.getFirstExpenseSubGroupName()));
     }
@@ -78,8 +65,71 @@ public class TransactionTest {
 
     @Test
     public void aTransactionMustHaveADescription() {
-        Transaction transaction = new Transaction(getTransactionDate(), TransactionType.MONEY, getExpenseGroup(), getDescription());
+        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
 
         assertThat(getDescription(), is(transaction.getDescription()));
+    }
+
+    private Double getValue() {
+        return 10.00;
+    }
+
+    @Test
+    public void aTransactionMustHaveAValue() {
+        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
+
+        assertThat(getValue(), is(transaction.getValue()));
+    }
+
+
+    @Test
+    public void aTransactionMustHaveAType_Money() {
+        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY);
+
+        assertThat(MONEY, is(transaction.getType()));
+    }
+
+    @Test
+    public void aTransactionMustHaveAType_Card() {
+        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), CARD);
+
+        assertThat(CARD, is(transaction.getType()));
+    }
+
+    private Integer getCurrentInstallment() {
+        return 1;
+    }
+
+    @Test
+    public void aTransactionCanBeSplittedWithCurrentInstallment() {
+        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), CARD, getCurrentInstallment(), getTotalInstallments());
+
+        assertThat(getCurrentInstallment(), is(transaction.getCurrentInstallment()));
+    }
+
+    private Integer getTotalInstallments() {
+        return 2;
+    }
+
+    @Test
+    public void aTransactionCanBeSplittedWithTotalInstallments() {
+        Transaction transaction = new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), CARD, getCurrentInstallment(), getTotalInstallments());
+
+        assertThat(getTotalInstallments(), is(transaction.getTotalInstallments()));
+    }
+
+    @Test(expected = InvalidInstallmentException.class)
+    public void aTransactionOfTypeMoneyCanBeSplitted_current_total() {
+        new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY, getCurrentInstallment(), getTotalInstallments());
+    }
+
+    @Test(expected = InvalidInstallmentException.class)
+    public void aTransactionOfTypeMoneyCanBeSplitted_current() {
+        new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY, getCurrentInstallment(), null);
+    }
+
+    @Test(expected = InvalidInstallmentException.class)
+    public void aTransactionOfTypeMoneyCanBeSplitted_total() {
+        new Transaction(getTransactionDate(), getExpenseGroup(), getDescription(), getValue(), MONEY, null, getTotalInstallments());
     }
 }
