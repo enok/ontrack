@@ -1,10 +1,8 @@
 package com.accounting.personal.ontrack.bill;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.time.LocalDate;
 
-import static org.apache.commons.lang3.StringUtils.*;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class TransactionBuilder {
     private LocalDate date;
