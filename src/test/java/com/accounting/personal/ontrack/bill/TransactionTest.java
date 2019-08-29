@@ -37,7 +37,7 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -47,35 +47,20 @@ public class TransactionTest {
         assertThat(getTransactionDate(), is(transaction.getDate()));
     }
 
-    private String getExpenseSubGroupName() {
-        return "SUPERMARKET";
-    }
-
-    private ExpenseSubGroup getExpenseSubGroup() {
-        return new ExpenseSubGroup(getExpenseSubGroupName());
-    }
-
     private String getExpenseGroupName() {
         return "HOUSE";
     }
 
     private ExpenseGroup getExpenseGroup() {
-        return new ExpenseGroup(getExpenseGroupName(), getExpenseSubGroup());
+        return new ExpenseGroup(getExpenseGroupName());
     }
 
-    @Test
-    public void aTransactionMustHaveAExpenseGroup() {
-        Transaction transaction = Transaction
-                .createObject()
-                .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
-                .withDescription(getDescription())
-                .withType(getType())
-                .withValue(getValue())
-                .withMechanism(MONEY)
-                .build();
+    private String getExpenseSubGroupName() {
+        return "SUPERMARKET";
+    }
 
-        assertThat(getExpenseGroupName(), is(transaction.getExpenseGroupName()));
+    private ExpenseSubGroup getExpenseSubGroup() {
+        return new ExpenseSubGroup(getExpenseSubGroupName(), getExpenseGroup());
     }
 
     @Test
@@ -83,14 +68,14 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
                 .withMechanism(MONEY)
                 .build();
 
-        assertThat(getExpenseSubGroupName(), is(transaction.getFirstExpenseSubGroupName()));
+        assertThat(getExpenseSubGroupName(), is(transaction.getExpenseSubGroupName()));
     }
 
     private String getDescription() {
@@ -102,7 +87,7 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -121,7 +106,7 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -136,7 +121,7 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(CREDIT)
                 .withValue(getValue())
@@ -155,7 +140,7 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -170,7 +155,7 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -185,7 +170,7 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -204,7 +189,7 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -225,7 +210,7 @@ public class TransactionTest {
         Transaction transaction = Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -242,7 +227,7 @@ public class TransactionTest {
         Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -257,7 +242,7 @@ public class TransactionTest {
         Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())
@@ -272,7 +257,7 @@ public class TransactionTest {
         Transaction
                 .createObject()
                 .withDate(getTransactionDate())
-                .withExpenseGroup(getExpenseGroup())
+                .withExpenseSubGroup(getExpenseSubGroup())
                 .withDescription(getDescription())
                 .withType(getType())
                 .withValue(getValue())

@@ -1,13 +1,12 @@
 package com.accounting.personal.ontrack.bill;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import static com.accounting.personal.ontrack.bill.TransactionMechanism.MONEY;
 
 public class Transaction {
     private final LocalDate date;
-    private final ExpenseGroup expenseGroup;
+    private final ExpenseSubGroup expenseSubGroup;
     private final String description;
     private final TransactionType type;
     private final Double value;
@@ -15,16 +14,16 @@ public class Transaction {
     private final Integer currentInstallment;
     private final Integer totalInstallments;
 
-    Transaction(final LocalDate date, final ExpenseGroup expenseGroup, final String description,
+    Transaction(final LocalDate date, final ExpenseSubGroup expenseSubGroup, final String description,
                 final TransactionType type, final Double value, final TransactionMechanism mechanism) {
-        this(date, expenseGroup, description, type, value, mechanism, null, null);
+        this(date, expenseSubGroup, description, type, value, mechanism, null, null);
     }
 
-    Transaction(final LocalDate date, final ExpenseGroup expenseGroup, final String description,
+    Transaction(final LocalDate date, final ExpenseSubGroup expenseSubGroup, final String description,
                 final TransactionType type, final Double value, final TransactionMechanism mechanism,
                 final Integer currentInstallment, final Integer totalInstallments) {
         this.date = date;
-        this.expenseGroup = expenseGroup;
+        this.expenseSubGroup = expenseSubGroup;
         this.description = description;
         this.type = type;
         this.value = value;
@@ -38,16 +37,8 @@ public class Transaction {
         return date;
     }
 
-    public String getExpenseGroupName() {
-        return expenseGroup.getName();
-    }
-
-    public List<String> getExpenseSubGroupNames() {
-        return expenseGroup.getSubGroupNames();
-    }
-
-    public String getFirstExpenseSubGroupName() {
-        return getExpenseSubGroupNames().get(0);
+    public String getExpenseSubGroupName() {
+        return expenseSubGroup.getName();
     }
 
     public String getDescription() {

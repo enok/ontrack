@@ -6,7 +6,7 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class TransactionBuilder {
     private LocalDate date;
-    private ExpenseGroup expenseGroup;
+    private ExpenseSubGroup expenseSubGroup;
     private String description;
     private TransactionType type;
     private Double value;
@@ -19,8 +19,8 @@ public class TransactionBuilder {
         return this;
     }
 
-    public TransactionBuilder withExpenseGroup(final ExpenseGroup expenseGroup) {
-        this.expenseGroup = expenseGroup;
+    public TransactionBuilder withExpenseSubGroup(final ExpenseSubGroup expenseSubGroup) {
+        this.expenseSubGroup = expenseSubGroup;
         return this;
     }
 
@@ -55,13 +55,13 @@ public class TransactionBuilder {
     }
 
     public Transaction build() {
-        if ((date == null) || (expenseGroup == null) || isBlank(description) || (type == null) || (value == null) ||
+        if ((date == null) || (expenseSubGroup == null) || isBlank(description) || (type == null) || (value == null) ||
                 (mechanism == null)) {
             throw new MissingMandatoryFieldsException("Missing mandatory field(s).");
         }
         if ((currentInstallment == null) && (totalInstallments == null)) {
-            return new Transaction(date, expenseGroup, description, type, value, mechanism);
+            return new Transaction(date, expenseSubGroup, description, type, value, mechanism);
         }
-        return new Transaction(date, expenseGroup, description, type, value, mechanism, currentInstallment, totalInstallments);
+        return new Transaction(date, expenseSubGroup, description, type, value, mechanism, currentInstallment, totalInstallments);
     }
 }
