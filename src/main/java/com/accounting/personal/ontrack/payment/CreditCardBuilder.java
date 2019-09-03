@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class CreditCardBuilder {
+public class CreditCardBuilder {
     private CreditCardClass creditCardClass;
     private CreditCardSubClass creditCardSubClass;
     private CreditCardFlag creditCardFlag;

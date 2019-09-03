@@ -1,7 +1,11 @@
 package com.accounting.personal.ontrack.bill;
 
+import com.accounting.personal.ontrack.bill.exception.MissingCreditCardException;
+import com.accounting.personal.ontrack.payment.CreditCard;
+
 import java.time.LocalDate;
 
+import static com.accounting.personal.ontrack.bill.TransactionMechanism.*;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class TransactionBuilder {
@@ -11,6 +15,7 @@ public class TransactionBuilder {
     private TransactionType type;
     private Double value;
     private TransactionMechanism mechanism;
+    private CreditCard creditCard;
     private Integer currentInstallment;
     private Integer totalInstallments;
 
@@ -44,6 +49,11 @@ public class TransactionBuilder {
         return this;
     }
 
+    public TransactionBuilder withCreditCard(final CreditCard creditCard) {
+        this.creditCard = creditCard;
+        return this;
+    }
+
     public TransactionBuilder withCurrentInstallment(final Integer currentInstallment) {
         this.currentInstallment = currentInstallment;
         return this;
@@ -60,8 +70,12 @@ public class TransactionBuilder {
             throw new MissingMandatoryFieldsException("Missing mandatory field(s).");
         }
         if ((currentInstallment == null) && (totalInstallments == null)) {
-            return new Transaction(date, expenseSubGroup, description, type, value, mechanism);
+            if (creditCard == null) {
+                return new Transaction(date, expenseSubGroup, description, type, value, mechanism);
+            }
+            return new Transaction(date, expenseSubGroup, description, type, value, mechanism, creditCard);
         }
-        return new Transaction(date, expenseSubGroup, description, type, value, mechanism, currentInstallment, totalInstallments);
+        return new Transaction(date, expenseSubGroup, description, type, value, mechanism, creditCard,
+                currentInstallment, totalInstallments);
     }
 }

@@ -2,6 +2,8 @@ package com.accounting.personal.ontrack.payment;
 
 import com.accounting.personal.ontrack.asset.Bank;
 import com.accounting.personal.ontrack.payment.exception.InvalidCvvValue;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -90,5 +92,28 @@ public class CreditCard {
 
     public static CreditCardBuilder createObject() {
         return new CreditCardBuilder();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CreditCard that = (CreditCard) o;
+
+        return new EqualsBuilder()
+                .append(creditCardNumber, that.creditCardNumber)
+                .append(cvv, that.cvv)
+                .append(creditCardClass, that.creditCardClass)
+                .append(creditCardSubClass, that.creditCardSubClass)
+                .append(creditCardFlag, that.creditCardFlag)
+                .append(creditCardType, that.creditCardType)
+                .append(bank, that.bank)
+                .append(customerName, that.customerName)
+                .append(memberSince, that.memberSince)
+                .append(validThru, that.validThru)
+                .append(creditCardFunctions, that.creditCardFunctions)
+                .isEquals();
     }
 }

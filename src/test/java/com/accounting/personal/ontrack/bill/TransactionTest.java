@@ -1,5 +1,8 @@
 package com.accounting.personal.ontrack.bill;
 
+import com.accounting.personal.ontrack.asset.Bank;
+import com.accounting.personal.ontrack.bill.exception.MissingCreditCardException;
+import com.accounting.personal.ontrack.payment.CreditCard;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +15,10 @@ import static com.accounting.personal.ontrack.bill.TransactionMechanism.CARD;
 import static com.accounting.personal.ontrack.bill.TransactionMechanism.MONEY;
 import static com.accounting.personal.ontrack.bill.TransactionType.CREDIT;
 import static com.accounting.personal.ontrack.bill.TransactionType.DEBIT;
+import static com.accounting.personal.ontrack.payment.CreditCardClass.GOLD;
+import static com.accounting.personal.ontrack.payment.CreditCardFlag.VISA;
+import static com.accounting.personal.ontrack.payment.CreditCardSubClass.STANDARD;
+import static com.accounting.personal.ontrack.payment.CreditCardType.PHYSICAL;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -175,9 +182,102 @@ public class TransactionTest {
                 .withType(getType())
                 .withValue(getValue())
                 .withMechanism(CARD)
+                .withCreditCard(getCreditCard())
                 .build();
 
         assertThat(CARD, is(transaction.getMechanism()));
+    }
+
+
+    private String getBankName() {
+        return "Boston";
+    }
+
+    private int getBankCode() {
+        return 33;
+    }
+
+    private Bank getBank() {
+        return new Bank(getBankName(), getBankCode());
+    }
+
+    private long getCreditCardNumber() {
+        return 123456789012L;
+    }
+
+    private String getCustomerName() {
+        return "Joseph Smith";
+    }
+
+    private String getMemberSince() {
+        return "2001-01";
+    }
+
+    private LocalDate getMemberSinceDate() {
+        return LocalDate.parse(getMemberSince() + "-01");
+    }
+
+    private String getValidThru() {
+        return "2002-01";
+    }
+
+    private LocalDate getValidThruDate() {
+        return LocalDate.parse(getValidThru() + "-01");
+    }
+
+    private int getCVV() {
+        return 123;
+    }
+
+    private CreditCard getCreditCard() {
+        return CreditCard
+                .createObject()
+                .withCreditCardClass(GOLD)
+                .withCreditCardSubClass(STANDARD)
+                .withCreditCardFlag(VISA)
+                .withCreditCardType(PHYSICAL)
+                .withBank(getBank())
+                .withCreditCardNumber(getCreditCardNumber())
+                .withCustomerName(getCustomerName())
+                .withMemberSinceDate(getMemberSinceDate())
+                .withValidThruDate(getValidThruDate())
+                .withCVV(getCVV())
+                .build();
+    }
+
+    @Test(expected = MissingCreditCardException.class)
+    public void errorWhenMechanismIsCardAndThereIsNoCreditCardInformation() {
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseSubGroup(getExpenseSubGroup())
+                .withDescription(getDescription())
+                .withType(getType())
+                .withValue(getValue())
+                .withMechanism(CARD)
+                .withCurrentInstallment(getCurrentInstallment())
+                .withTotalInstallments(getTotalInstallments())
+                .build();
+
+        assertThat(getCurrentInstallment(), is(transaction.getCurrentInstallment()));
+    }
+
+    @Test
+    public void aTransactionOfTypeCardMustHaveACreditCard() {
+        Transaction transaction = Transaction
+                .createObject()
+                .withDate(getTransactionDate())
+                .withExpenseSubGroup(getExpenseSubGroup())
+                .withDescription(getDescription())
+                .withType(getType())
+                .withValue(getValue())
+                .withMechanism(CARD)
+                .withCreditCard(getCreditCard())
+                .withCurrentInstallment(getCurrentInstallment())
+                .withTotalInstallments(getTotalInstallments())
+                .build();
+
+        assertThat(getCreditCard(), is(transaction.getCreditCard()));
     }
 
     private Integer getCurrentInstallment() {
@@ -194,6 +294,7 @@ public class TransactionTest {
                 .withType(getType())
                 .withValue(getValue())
                 .withMechanism(CARD)
+                .withCreditCard(getCreditCard())
                 .withCurrentInstallment(getCurrentInstallment())
                 .withTotalInstallments(getTotalInstallments())
                 .build();
@@ -215,6 +316,7 @@ public class TransactionTest {
                 .withType(getType())
                 .withValue(getValue())
                 .withMechanism(CARD)
+                .withCreditCard(getCreditCard())
                 .withCurrentInstallment(getCurrentInstallment())
                 .withTotalInstallments(getTotalInstallments())
                 .build();
