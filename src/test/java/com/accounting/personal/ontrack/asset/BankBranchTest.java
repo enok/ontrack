@@ -25,30 +25,30 @@ public class BankBranchTest {
         return new Bank(getBankName(), getBankCode());
     }
 
-    private int getBankAgencyCode() {
+    private int getBankBranchCode() {
         return 1234;
     }
 
-    private int getBankAgencyDigit() {
+    private int getBankBranchDigit() {
         return 1;
     }
 
     @Test(expected = MissingBankException.class)
-    public void errorWhenABankAgencyDoesNotHaveABank() {
-        new BankBranch(null, getBankAgencyCode());
+    public void errorWhenABankBranchDoesNotHaveABank() {
+        new BankBranch(null, getBankBranchCode());
     }
 
     @Test
-    public void aBankAgencyMustHaveABank() {
-        BankBranch bankBranch = new BankBranch(getBank(), getBankAgencyCode());
+    public void aBankBranchMustHaveABank() {
+        BankBranch bankBranch = new BankBranch(getBank(), getBankBranchCode());
 
         assertThat(getBankName(), is(bankBranch.bankName()));
         assertThat(getBankCode(), is(bankBranch.bankCode()));
     }
 
     @Test
-    public void aBankAgencyCanHaveADigit() {
-        BankBranch bankBranch = new BankBranch(getBank(), getBankAgencyCode(), getBankAgencyDigit());
+    public void aBankBranchCanHaveADigit() {
+        BankBranch bankBranch = new BankBranch(getBank(), getBankBranchCode(), getBankBranchDigit());
 
         assertThat(getBankName(), is(bankBranch.bankName()));
         assertThat(1, is(bankBranch.getDigit()));

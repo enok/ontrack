@@ -32,7 +32,7 @@ public class BankAccountTest {
         BankAccount bankAccount = BankAccount
                 .createObject()
                 .withOwner(getOwnerName())
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(getAccountLimit())
                 .build();
@@ -45,7 +45,7 @@ public class BankAccountTest {
         BankAccount bankAccount = BankAccount
                 .createObject()
                 .withOwner(getOwnerName())
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(getAccountLimit())
                 .build();
@@ -65,7 +65,7 @@ public class BankAccountTest {
                 .createObject()
                 .withOwner(getOwnerName())
                 .withBalance(getAccountBalance())
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(getAccountLimit())
                 .build();
@@ -74,7 +74,7 @@ public class BankAccountTest {
         assertThat(getAccountBalance(), is(bankAccount.balance()));
     }
 
-    // bankAgency
+    // bankBranch
 
     private String getBankName() {
         return "Boston";
@@ -88,24 +88,24 @@ public class BankAccountTest {
         return new Bank(getBankName(), getBankCode());
     }
 
-    private int getBankAgencyCode() {
+    private int getBankBranchCode() {
         return 1234;
     }
 
-    private int getBankAgencyDigit() {
+    private int getBankBranchDigit() {
         return 0;
     }
 
-    private BankBranch getBankAgency() {
-        return new BankBranch(getBank(), getBankAgencyCode());
+    private BankBranch getBankBranch() {
+        return new BankBranch(getBank(), getBankBranchCode());
     }
 
-    private BankBranch getBankAgencyWithDigit() {
-        return new BankBranch(getBank(), getBankAgencyCode(), getBankAgencyDigit());
+    private BankBranch getBankBranchWithDigit() {
+        return new BankBranch(getBank(), getBankBranchCode(), getBankBranchDigit());
     }
 
-    @Test(expected = MissingBankAgencyException.class)
-    public void errorWhenABankAccountDoesNotHaveABankAgency() {
+    @Test(expected = MissingBankBranchException.class)
+    public void errorWhenABankAccountDoesNotHaveABankBranch() {
         BankAccount
                 .createObject()
                 .withOwner(getOwnerName())
@@ -113,32 +113,32 @@ public class BankAccountTest {
     }
 
     @Test
-    public void aBankAccountMustHaveABankAgency() {
+    public void aBankAccountMustHaveABankBranch() {
         BankAccount bankAccount = BankAccount
                 .createObject()
                 .withOwner(getOwnerName())
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(getAccountLimit())
                 .build();
 
-        assertThat(getBankAgencyCode(), is(bankAccount.agencyCode()));
-        assertThat(bankAccount.agencyDigit(), nullValue());
+        assertThat(getBankBranchCode(), is(bankAccount.branchCode()));
+        assertThat(bankAccount.branchDigit(), nullValue());
     }
 
     @Test
-    public void aBankAccountMustHaveABankAgencyAndCanHaveADigit() {
+    public void aBankAccountMustHaveABankBranchAndCanHaveADigit() {
         BankAccount bankAccount = BankAccount
                 .createObject()
                 .withOwner(getOwnerName())
                 .withBalance(getAccountBalance())
-                .withBankAgency(getBankAgencyWithDigit())
+                .withBankBranch(getBankBranchWithDigit())
                 .withCode(getAccountCode())
                 .withLimit(getAccountLimit())
                 .build();
 
-        assertThat(getBankAgencyCode(), is(bankAccount.agencyCode()));
-        assertThat(getBankAgencyDigit(), is(bankAccount.agencyDigit()));
+        assertThat(getBankBranchCode(), is(bankAccount.branchCode()));
+        assertThat(getBankBranchDigit(), is(bankAccount.branchDigit()));
     }
 
     // code
@@ -152,7 +152,7 @@ public class BankAccountTest {
         BankAccount
                 .createObject()
                 .withOwner(getOwnerName())
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .build();
     }
 
@@ -161,7 +161,7 @@ public class BankAccountTest {
         BankAccount bankAccount = BankAccount
                 .createObject()
                 .withOwner(getOwnerName())
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(getAccountLimit())
                 .build();
@@ -180,7 +180,7 @@ public class BankAccountTest {
                 .createObject()
                 .withOwner(getOwnerName())
                 .withBalance(getAccountBalance())
-                .withBankAgency(getBankAgencyWithDigit())
+                .withBankBranch(getBankBranchWithDigit())
                 .withCode(getAccountCode())
                 .withCodeDigit(getAccountCodeDigit())
                 .withLimit(getAccountLimit())
@@ -201,7 +201,7 @@ public class BankAccountTest {
                 .createObject()
                 .withOwner(getOwnerName())
                 .withBalance(getAccountBalance())
-                .withBankAgency(getBankAgencyWithDigit())
+                .withBankBranch(getBankBranchWithDigit())
                 .withCode(getAccountCode())
                 .withCodeDigit(getAccountCodeDigit())
                 .build();
@@ -212,7 +212,7 @@ public class BankAccountTest {
         BankAccount bankAccount = BankAccount
                 .createObject()
                 .withOwner(getOwnerName())
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(getAccountLimit())
                 .build();
@@ -225,7 +225,7 @@ public class BankAccountTest {
         BankAccount bankAccount = BankAccount
                 .createObject()
                 .withOwner(getOwnerName())
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(0.0)
                 .build();
@@ -239,7 +239,7 @@ public class BankAccountTest {
                 .createObject()
                 .withOwner(getOwnerName())
                 .withBalance(100.0)
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(0.0)
                 .build();
@@ -253,7 +253,7 @@ public class BankAccountTest {
                 .createObject()
                 .withOwner(getOwnerName())
                 .withBalance(100.0)
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(getAccountLimit())
                 .build();
@@ -267,7 +267,7 @@ public class BankAccountTest {
                 .createObject()
                 .withOwner(getOwnerName())
                 .withBalance(100.0)
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(0.0)
                 .build();
@@ -283,7 +283,7 @@ public class BankAccountTest {
                 .createObject()
                 .withOwner(getOwnerName())
                 .withBalance(100.0)
-                .withBankAgency(getBankAgency())
+                .withBankBranch(getBankBranch())
                 .withCode(getAccountCode())
                 .withLimit(100.0)
                 .build();

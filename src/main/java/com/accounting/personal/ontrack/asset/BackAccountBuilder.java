@@ -18,7 +18,7 @@ class BackAccountBuilder {
         return this;
     }
 
-    public BackAccountBuilder withBankAgency(final BankBranch bankBranch) {
+    public BackAccountBuilder withBankBranch(final BankBranch bankBranch) {
         this.bankBranch = bankBranch;
         return this;
     }

@@ -11,7 +11,7 @@ public class BankAccount extends Wallet {
     public BankAccount(final String owner, final double balance, final BankBranch bankBranch,
                        final Integer code, final Integer codeDigit, Double limit) {
         super(owner, balance);
-        validateBankAgency(bankBranch);
+        validateBankBranch(bankBranch);
         validateCode(code);
         validateLimit(limit);
         this.bankBranch = bankBranch;
@@ -34,11 +34,11 @@ public class BankAccount extends Wallet {
         return new BankAccount(wallet.owner(), wallet.balance(), bankBranch, code, codeDigit, limit);
     }
 
-    public int agencyCode() {
+    public int branchCode() {
         return bankBranch.getCode();
     }
 
-    public Integer agencyDigit() {
+    public Integer branchDigit() {
         return bankBranch.getDigit();
     }
 
@@ -62,9 +62,9 @@ public class BankAccount extends Wallet {
         return new BackAccountBuilder();
     }
 
-    private void validateBankAgency(BankBranch bankBranch) {
+    private void validateBankBranch(BankBranch bankBranch) {
         if (bankBranch == null) {
-            throw new MissingBankAgencyException("A bank account must have a bank agency associated with it.");
+            throw new MissingBankBranchException("A bank account must have a bank branch associated with it.");
         }
     }
 
