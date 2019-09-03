@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BankAgencyTest {
+public class BankBranchTest {
 
     private String getBankName() {
         return "Boston";
@@ -35,22 +35,22 @@ public class BankAgencyTest {
 
     @Test(expected = MissingBankException.class)
     public void errorWhenABankAgencyDoesNotHaveABank() {
-        new BankAgency(null, getBankAgencyCode());
+        new BankBranch(null, getBankAgencyCode());
     }
 
     @Test
     public void aBankAgencyMustHaveABank() {
-        BankAgency bankAgency = new BankAgency(getBank(), getBankAgencyCode());
+        BankBranch bankBranch = new BankBranch(getBank(), getBankAgencyCode());
 
-        assertThat(getBankName(), is(bankAgency.bankName()));
-        assertThat(getBankCode(), is(bankAgency.bankCode()));
+        assertThat(getBankName(), is(bankBranch.bankName()));
+        assertThat(getBankCode(), is(bankBranch.bankCode()));
     }
 
     @Test
     public void aBankAgencyCanHaveADigit() {
-        BankAgency bankAgency = new BankAgency(getBank(), getBankAgencyCode(), getBankAgencyDigit());
+        BankBranch bankBranch = new BankBranch(getBank(), getBankAgencyCode(), getBankAgencyDigit());
 
-        assertThat(getBankName(), is(bankAgency.bankName()));
-        assertThat(1, is(bankAgency.getDigit()));
+        assertThat(getBankName(), is(bankBranch.bankName()));
+        assertThat(1, is(bankBranch.getDigit()));
     }
 }

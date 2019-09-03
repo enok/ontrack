@@ -96,12 +96,12 @@ public class BankAccountTest {
         return 0;
     }
 
-    private BankAgency getBankAgency() {
-        return new BankAgency(getBank(), getBankAgencyCode());
+    private BankBranch getBankAgency() {
+        return new BankBranch(getBank(), getBankAgencyCode());
     }
 
-    private BankAgency getBankAgencyWithDigit() {
-        return new BankAgency(getBank(), getBankAgencyCode(), getBankAgencyDigit());
+    private BankBranch getBankAgencyWithDigit() {
+        return new BankBranch(getBank(), getBankAgencyCode(), getBankAgencyDigit());
     }
 
     @Test(expected = MissingBankAgencyException.class)

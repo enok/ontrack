@@ -2,19 +2,19 @@ package com.accounting.personal.ontrack.asset;
 
 import com.accounting.personal.ontrack.asset.exception.MissingBankException;
 
-public class BankAgency {
+public class BankBranch {
     private final Bank bank;
     private final int code;
     private final Integer digit;
 
-    public BankAgency(Bank bank, final int code) {
+    public BankBranch(Bank bank, final int code) {
         validateBank(bank);
         this.bank = bank;
         this.code = code;
         this.digit = null;
     }
 
-    public BankAgency(Bank bank, int code, int digit) {
+    public BankBranch(Bank bank, int code, int digit) {
         this.bank = bank;
         this.code = code;
         this.digit = digit;
