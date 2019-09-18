@@ -193,12 +193,12 @@ public class TransactionTest {
         return "Boston";
     }
 
-    private int getBankCode() {
-        return 33;
+    private String getBankCode() {
+        return "033";
     }
 
     private Bank getBank() {
-        return new Bank(getBankName(), getBankCode());
+        return new Bank(getBankCode(), getBankName());
     }
 
     private long getCreditCardNumber() {

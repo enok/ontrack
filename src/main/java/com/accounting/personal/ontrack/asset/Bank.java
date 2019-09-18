@@ -2,14 +2,13 @@ package com.accounting.personal.ontrack.asset;
 
 import com.accounting.personal.ontrack.asset.exception.MissingNameException;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.springframework.util.StringUtils;
 
 public class Bank {
     private final String name;
-    private final int code;
+    private final String code;
 
-    public Bank(String name, int code) {
+    public Bank(String code, String name) {
         validateName(name);
         this.name = name;
         this.code = code;
@@ -25,7 +24,7 @@ public class Bank {
         return name;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 

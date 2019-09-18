@@ -30,7 +30,7 @@ public class BankBranch {
         return bank.getName();
     }
 
-    public int bankCode() {
+    public String bankCode() {
         return bank.getCode();
     }
 

@@ -17,18 +17,18 @@ public class BankTest {
         return "Boston";
     }
 
-    private int getCode() {
-        return 1;
+    private String getCode() {
+        return "001";
     }
 
     @Test(expected = MissingNameException.class)
     public void errorWhenABankDoesNotHaveAName() {
-        new Bank(null, getCode());
+        new Bank(getCode(), null);
     }
 
     @Test
     public void aBankMustHaveANameAndCode() {
-        Bank bank = new Bank(getName(), getCode());
+        Bank bank = new Bank(getCode(), getName());
 
         assertThat(getName(), is(bank.getName()));
         assertThat(getCode(), is(bank.getCode()));
